@@ -3,12 +3,11 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const usersController = require('../controller/userController');
 
-
 router.get('/',usersController.get_all_users);
 
 router.post('/signup',usersController.signUpUser);
 
-router.login('/',usersController.loginUser);
+router.post('/login',usersController.loginUser);
 
 router.get('/:userID',usersController.getUserByID);
 

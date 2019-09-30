@@ -1,7 +1,6 @@
-const User = require('../routes/users');
+const User = require('../models/user');
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
-
 
 exports.get_all_users = (req,res,next)=>{
     User.find()
@@ -13,7 +12,7 @@ exports.get_all_users = (req,res,next)=>{
                 users:doc
             });
         }else{
-            res.status(200).json({
+            res.status(204).json({
                 message: 'No Users Found'
             });
         }
@@ -46,7 +45,6 @@ exports.getUserByID = (req,res,next)=>{
             error : err.message
         });
     });
-    
 };
 
 exports.signUpUser = (req,res,next)=>{
@@ -60,32 +58,15 @@ exports.signUpUser = (req,res,next)=>{
     });
     
     user.save().then(result =>{
-
         bcrypt.hash(req.body.password,10,(err,hash)=>{
             if(err){
                 return res.status(500).json({
                     error:err
                 })
             }else{
-                
-                const user = new User({
-                    _id: new mongoose.Types.ObjectId(),
-                    name : req.body.name,
-                    phone : req.body.phone,
-                    email : req.body.email,
-                    password: hash
-                });
-                
-                user.save()
-                .then(result => {
-                    res.status(201).json({
-                        message:'User Signed Up successfully'
-                    });
-                })
-                .catch(err =>{
-                    res.status(500).json({
-                        error :err.message
-                    })
+                res.status(201).json({
+                    message:'User Signed Up successfully',
+                    result : result
                 });
     
             }
@@ -185,6 +166,6 @@ exports.deleteUser = (req,res,next)=>{
         res.status(500).json({
             error : err
         });
-    })
+    });
 
 };
