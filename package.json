@@ -1,6 +1,9 @@
 {
   "name": "bukarte",
   "version": "1.0.0",
+  "engines": {
+    "node": "8.10.0"
+  },
   "description": "backend for The app - bukarte",
   "main": "server.js",
   "scripts": {
