@@ -6,6 +6,7 @@ exports.getAllBanners = (req,res,next)=>{
     Banner.find()
     .exec()
     .then(result =>{
+        
         if(result.length >=1 ){
             res.status(200).json({
                 banners :result
@@ -15,6 +16,7 @@ exports.getAllBanners = (req,res,next)=>{
                 message : 'banners Not Found'
             });
         }
+        
     }).catch(err =>{
         res.status(500).json({
             error : err.message
@@ -39,7 +41,7 @@ exports.getBannerByID = (req,res,next)=>{
     }).catch(err =>{
         res.status(500).json({
             error : err.message
-        })        
+        });        
     });
 
 }

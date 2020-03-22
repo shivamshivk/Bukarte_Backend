@@ -15,7 +15,27 @@ const storage = multer.diskStorage({
 
 const fileFilter = (req,file,cb) =>{
     if(file.mimetype === 'jpg' || file.mimetype === 'jpeg' || file.mimetype === 'png'){
-        cb(null,true);
+        cb(null,true);exports.getBannerByID = (req,res,next)=>{
+
+            Banner.findById({'_id ': req.body.banner_id})
+            .exec()
+            .then(result =>{
+                if(result){
+                    res.status(200).json({
+                        banner :result
+                    });
+                }else{
+                    res.status(404).json({
+                        message : 'Banner Not Found'
+                    });
+                }
+            }).catch(err =>{
+                res.status(500).json({
+                    error : err.message
+                });        
+            });
+        
+        }
     }else{
         cb(null,true);
     }

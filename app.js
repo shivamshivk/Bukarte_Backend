@@ -7,6 +7,7 @@ const userRoute = require('./api/routes/users');
 const productRoute = require('./api/routes/product');
 const categoryRoute = require('./api/routes/category');
 const bannerRoute = require('./api/routes/banner');
+const adRoute = require('./api/routes/ads');
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://shivamshivl:'+ 
@@ -22,6 +23,7 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 
 app.use('/',d_route);
+app.use('/ads',adRoute);
 app.use('/users',userRoute);
 app.use('/products',productRoute);
 app.use('/category',categoryRoute);
@@ -32,6 +34,8 @@ app.use((req,res,next) => {
     error.status = 404;
     next(error);
 });
+
+
 
 app.use((error,req,res,next) => {
     res.status(error.status || 500 ).json({
